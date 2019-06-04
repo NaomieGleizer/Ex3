@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Position";
+}
+
+
+<style>
+    .mapImg {
+        background-image: url(/Images/export-map-share.png);
+        width: 100%;
+        height: 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+    }
+
+
+    #myCanvas {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+
+
+<div class="mapImg" id="d">
+    <canvas id="myCanvas"></canvas>
+</div>
+
+
+
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var lat
+    var lon
+
+    $.getJSON("@Url.Action("GetLanLot")").done(function (data) {
+        lon = ((data.x + 180) / 360) * canvas.width;
+        lat = ((data.y + 90) / 180) * canvas.height;
+        prevLon = lon;
+        prevLat = lat;
+
+        ctx.beginPath();
+        ctx.fillStyle = "#000080";
+        ctx.arc(lon, lat, 2, 0, 2 * Math.PI, true);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.arc(lon, lat, 1, 0, 2 * Math.PI, true);
+        ctx.fill();
+    });
+</script>

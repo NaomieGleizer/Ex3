@@ -1,0 +1,49 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<head>
+    <style>
+        body {
+            background-color: #4dffdb;
+            text-align: center;
+        }
+        h2{
+           font-family:'Segoe UI';
+        }
+        p {
+            font-family: 'Segoe UI';
+        }
+        a:link, a:visited {
+            background-color: #00b38f;
+            color: white;
+            padding: 15px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Segoe UI';
+        }
+        a:hover, a:active {
+            background-color: #00e6b8;
+        }
+    </style>
+</head>
+<body>
+    <h1>Advenced Programming Ex 3</h1>
+    <br>
+    <p>To see plane's location</p>
+    <a href="@Url.Action("Position", "Flight" , new { ip="127.0.0.1" , port=5400})">
+        display/127.0.0.1/5400
+    </a>
+    <br>
+    <p>To see plane's location 4 times in a second</p>
+    <a href="@Url.Action("map", "Flight" , new { ip="127.0.0.1" , port=5400, seconds=4 })">
+        display/127.0.0.1/5400/4
+    </a>
+    <br>
+    <p>To save the plane's location, speed and alt to file for 10 seconds </p>
+    <a href="@Url.Action("Save", "Flight" , new { ip="127.0.0.1" , port=5400, perSeconds = 4, duration = 10, file="flight1" })">
+        /save/127.0.0.1/5400/4/10/flight1 
+    </a>
+</body>
