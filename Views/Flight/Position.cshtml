@@ -5,8 +5,9 @@
 
 
 <style>
+    /* sets background image for div */
     .mapImg {
-        background-image: url(/Images/export-map-share.png);
+        background-image: url(/App_Data/export-map-share.png);
         width: 100%;
         height: 100%;
         background-position: center;
@@ -15,32 +16,30 @@
         position: relative;
     }
 
-
+    /* sets canvas on all screen */
     #myCanvas {
         width: 100%;
         height: 100%;
     }
 </style>
 
-
 <div class="mapImg" id="d">
     <canvas id="myCanvas"></canvas>
 </div>
-
-
 
 <script>
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     var lat
     var lon
-
-    $.getJSON("@Url.Action("GetLanLot")").done(function (data) {
+    /* get location of plane from controller */
+    $.getJSON("@Url.Action("GetLatLon")").done(function (data) {
+        // normalize location
         lon = ((data.x + 180) / 360) * canvas.width;
         lat = ((data.y + 90) / 180) * canvas.height;
         prevLon = lon;
         prevLat = lat;
-
+        // draw a point on location
         ctx.beginPath();
         ctx.fillStyle = "#000080";
         ctx.arc(lon, lat, 2, 0, 2 * Math.PI, true);

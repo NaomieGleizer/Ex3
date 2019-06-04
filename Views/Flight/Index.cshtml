@@ -46,4 +46,8 @@
     <a href="@Url.Action("Save", "Flight" , new { ip="127.0.0.1" , port=5400, perSeconds = 4, duration = 10, file="flight1" })">
         /save/127.0.0.1/5400/4/10/flight1 
     </a>
+    <p>To load the plane's location, speed and alt from file </p>
+    <a href="@Url.Action("Load", "Flight" , new { file="flight1" , seconds = 4 })">
+        /save/flight1/4
+    </a>
 </body>
