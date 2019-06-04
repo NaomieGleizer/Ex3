@@ -33,16 +33,17 @@
     var ctx = canvas.getContext("2d");
     var lat, lon
 
-    var IntervalTime = @Session["time"] * 1000
+    var IntervalTime = @Session["time"] * 1000 /* the number of time per seconds for set interval*/
     var prevLat, prevLon
-    var x, y
-
-    $.getJSON("@Url.Action("GetLanLot")").done(function (data) {
+    /* call the method from the controller for the first position */
+    $.getJSON("@Url.Action("GetLatLon")").done(function (data) {
+        /* normalize the values of longtitude and latitude*/
         lon = ((data.x + 180) / 360) * canvas.width;
         lat = ((data.y + 90) / 180) * canvas.height;
         prevLon = lon;
         prevLat = lat;
 
+        /* the circles for the first position of the plan*/
         ctx.beginPath();
         ctx.fillStyle = "#000080";
         ctx.arc(lon, lat, 2, 0, 2 * Math.PI, true);
@@ -56,28 +57,17 @@
         ctx.strokeStyle = "red";
         ctx.beginPath();
         ctx.moveTo(lon, lat);
-        x = lon
-        y = lat
 
+
+        /* call the method for drawing the path of the plan*/
         myTimer = (function () {
-            $.getJSON("@Url.Action("GetLanLot")").done(function (data) {
-
+            $.getJSON("@Url.Action("GetLatLon")").done(function (data) {
+                /* normalize the values of longtitude and latitude*/
                 lon = ((data.x + 180) / 360) * canvas.width;
                 lat = ((data.y + 90) / 180) * canvas.height;
+                /* draw a line if the position cahanged */
                 if (prevLat != lat && prevLon != lon) {
-                    if (lon - prevLon > 0) {
-                        x += 0.2;
-                    }
-                    else {
-                        x -= 0.2;
-                    }
-                    if (lat - prevLat > 0) {
-                        y += 0.2;
-                    }
-                    else {
-                        y -= 0.2;
-                    }
-                    ctx.lineTo(x, y);
+                    ctx.lineTo(lon, lat);
                     ctx.stroke();
                     prevLat = lat;
                     prevLon = lon;
